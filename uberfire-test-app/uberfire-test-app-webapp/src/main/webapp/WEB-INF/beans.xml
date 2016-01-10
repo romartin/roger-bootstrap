@@ -29,6 +29,7 @@
     
     <exclude name="org.roger600.uberfire.testapp.api.**"/>
     <exclude name="org.roger600.uberfire.testapp.client.**"/>
+    <exclude name="org.roger600.uberfire.testapp.model.api.**"/>
     
     <!-- Lienzo. -->
     <exclude name="com.ait.lienzo.**"/>

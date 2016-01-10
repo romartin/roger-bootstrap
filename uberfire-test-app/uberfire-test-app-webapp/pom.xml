@@ -225,6 +225,11 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.roger600.uberfire.testapp</groupId>
+      <artifactId>uberfire-test-app-model-api</artifactId>
+    </dependency>
+
     <!-- UberFire Plugins Extension -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -358,7 +363,8 @@
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-service-api</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-backend</compileSourcesArtifact>
+            <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-client</compileSourcesArtifact>
+            <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-model-api</compileSourcesArtifact>
 
           </compileSourcesArtifacts>
         </configuration>

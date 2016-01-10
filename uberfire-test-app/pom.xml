@@ -59,6 +59,7 @@
 
   <modules>
     <module>uberfire-test-app-core</module>
+    <module>uberfire-test-app-model</module>
     <module>uberfire-test-app-webapp</module>
   </modules>
   
@@ -137,6 +138,19 @@
         <classifier>sources</classifier>
       </dependency>
 
+      <dependency>
+        <groupId>org.roger600.uberfire.testapp</groupId>
+        <artifactId>uberfire-test-app-model-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.roger600.uberfire.testapp</groupId>
+        <artifactId>uberfire-test-app-model-api</artifactId>
+        <version>${project.version}</version>
+        <classifier>sources</classifier>
+      </dependency>
+      
       
       <!-- Integration Platform -->
       <dependency>
