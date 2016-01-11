@@ -63,8 +63,14 @@ public class ShowcaseEntryPoint {
                     public void execute() {
                         placeManager.goTo(new DefaultPlaceRequest("HomePerspective"));
                     }
+                }).endMenu().
+                        newTopLevelMenu("Test").respondsWith(new Command() {
+                    @Override
+                    public void execute() {
+                        placeManager.goTo(new DefaultPlaceRequest("TestAppPerspective"));
+                    }
                 }).endMenu()
-                .build();
+                        .build();
         menubar.addMenus(menus);
     }
 

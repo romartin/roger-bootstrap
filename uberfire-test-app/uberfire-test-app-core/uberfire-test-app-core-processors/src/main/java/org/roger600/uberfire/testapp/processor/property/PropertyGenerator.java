@@ -1,7 +1,7 @@
-package org.roger600.uberfire.testapp.backend.processor;
+package org.roger600.uberfire.testapp.processor.property;
 
+import org.roger600.uberfire.testapp.processor.GeneratorUtils;
 import org.uberfire.annotations.processors.AbstractGenerator;
-import org.uberfire.annotations.processors.GeneratorUtils;
 import org.uberfire.annotations.processors.exceptions.GenerationException;
 import org.uberfire.relocated.freemarker.template.Template;
 import org.uberfire.relocated.freemarker.template.TemplateException;
@@ -9,20 +9,18 @@ import org.uberfire.relocated.freemarker.template.TemplateException;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.*;
-import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
-import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @see org.uberfire.annotations.processors.ScreenActivityGenerator
  */
 public class PropertyGenerator extends AbstractGenerator  {
-    
     
     @Override
     public StringBuffer generate(String packageName, PackageElement packageElement, String className, Element element, ProcessingEnvironment processingEnvironment) throws GenerationException {
@@ -50,7 +48,7 @@ public class PropertyGenerator extends AbstractGenerator  {
             }
         }
 
-        final String getNameMethodName = PropertyGeneratorUtils.getNameMethodName( classElement, processingEnvironment );
+        final String getNameMethodName = GeneratorUtils.getStringMethodName( classElement, PropertyProcessor.ANNOTATION_PROPERTY_NAME, processingEnvironment );
 
         // Validations.
         if ( getNameMethodName == null ) {

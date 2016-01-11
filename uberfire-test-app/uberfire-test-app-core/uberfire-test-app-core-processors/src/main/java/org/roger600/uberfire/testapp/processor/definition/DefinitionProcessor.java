@@ -1,9 +1,12 @@
-package org.roger600.uberfire.testapp.backend.processor;
+package org.roger600.uberfire.testapp.processor.definition;
 
 import org.uberfire.annotations.processors.AbstractErrorAbsorbingProcessor;
 import org.uberfire.annotations.processors.exceptions.GenerationException;
 
-import javax.annotation.processing.*;
+import javax.annotation.processing.Messager;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ElementKind;
@@ -16,23 +19,23 @@ import java.util.Set;
 /**
  * @see org.uberfire.annotations.processors.WorkbenchScreenProcessor
  */
-@SupportedAnnotationTypes(PropertyProcessor.ANNOTATION_PROPERTY)
+@SupportedAnnotationTypes(DefinitionProcessor.ANNOTATION_DEFINITION)
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
-public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
+public class DefinitionProcessor extends AbstractErrorAbsorbingProcessor {
     
-    public static final String ANNOTATION_PROPERTY = "org.roger600.uberfire.testapp.api.model.annotation.property.Property";
-    public static final String ANNOTATION_PROPERTY_NAME = "org.roger600.uberfire.testapp.api.model.annotation.property.PropertyName";
+    public static final String ANNOTATION_DEFINITION = "org.roger600.uberfire.testapp.api.model.annotation.definition.Definition";
+    public static final String ANNOTATION_DEFINITION_NAME = "org.roger600.uberfire.testapp.api.model.annotation.definition.DefinitionName";
 
-    private final PropertyGenerator propertyGenerator;
+    private final DefinitionGenerator definitionGenerator;
 
-    public PropertyProcessor() {
-        PropertyGenerator pg = null;
+    public DefinitionProcessor() {
+        DefinitionGenerator pg = null;
         try {
-            pg = new PropertyGenerator();
+            pg = new DefinitionGenerator();
         } catch (Throwable t) {
             rememberInitializationError(t);
         }
-        propertyGenerator = pg;
+        definitionGenerator = pg;
     }
 
     @Override
@@ -51,22 +54,22 @@ public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
         final Messager messager = processingEnv.getMessager();
         final Elements elementUtils = processingEnv.getElementUtils();
 
-        for ( Element e : roundEnv.getElementsAnnotatedWith( elementUtils.getTypeElement(ANNOTATION_PROPERTY) ) ) {
+        for ( Element e : roundEnv.getElementsAnnotatedWith( elementUtils.getTypeElement(ANNOTATION_DEFINITION) ) ) {
             if (e.getKind() == ElementKind.CLASS) {
 
                 TypeElement classElement = (TypeElement) e;
                 PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
 
-                messager.printMessage(Diagnostic.Kind.NOTE, "Discovered property class [" + classElement.getSimpleName() + "]");
+                messager.printMessage(Diagnostic.Kind.NOTE, "Discovered definition class [" + classElement.getSimpleName() + "]");
 
                 final String packageName = packageElement.getQualifiedName().toString();
-                final String classNameActivity = classElement.getSimpleName() + "Property";
+                final String classNameActivity = classElement.getSimpleName() + "Definition";
 
                 try {
                     //Try generating code for each required class
                     messager.printMessage( Diagnostic.Kind.NOTE, "Generating code for [" + classNameActivity + "]" );
 
-                    final StringBuffer propertyClassCode = propertyGenerator.generate( packageName,
+                    final StringBuffer definitionClassCode = definitionGenerator.generate( packageName,
                             packageElement,
                             classNameActivity,
                             classElement,
@@ -74,7 +77,7 @@ public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
                     
                     writeCode( packageName,
                             classNameActivity,
-                            propertyClassCode );
+                            definitionClassCode );
                     
                 } catch ( GenerationException ge ) {
                     final String msg = ge.getMessage();

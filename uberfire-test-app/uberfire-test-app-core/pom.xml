@@ -16,6 +16,7 @@
   
   <modules>
     <module>uberfire-test-app-core-api</module>
+    <module>uberfire-test-app-core-processors</module>
     <module>uberfire-test-app-core-backend</module>
     <module>uberfire-test-app-core-client</module>
   </modules>

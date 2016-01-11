@@ -5,7 +5,7 @@ import org.jboss.errai.common.client.api.annotations.Portable;
 import org.roger600.uberfire.testapp.api.model.Definition;
 
 @Portable
-public class DefinitionImpl implements Definition{
+public class DefinitionImpl implements Definition {
     
     private final String id;
     private final String name;

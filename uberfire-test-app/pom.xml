@@ -112,6 +112,20 @@
         <classifier>sources</classifier>
       </dependency>
 
+
+      <dependency>
+        <groupId>org.roger600.uberfire.testapp</groupId>
+        <artifactId>uberfire-test-app-core-processors</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.roger600.uberfire.testapp</groupId>
+        <artifactId>uberfire-test-app-core-processors</artifactId>
+        <version>${project.version}</version>
+        <classifier>sources</classifier>
+      </dependency>
+
       <dependency>
         <groupId>org.roger600.uberfire.testapp</groupId>
         <artifactId>uberfire-test-app-core-backend</artifactId>

@@ -216,6 +216,12 @@
 
     <dependency>
       <groupId>org.roger600.uberfire.testapp</groupId>
+      <artifactId>uberfire-test-app-core-processors</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.roger600.uberfire.testapp</groupId>
       <artifactId>uberfire-test-app-core-backend</artifactId>
     </dependency>
 
@@ -225,10 +231,10 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
+   <!-- <dependency>
       <groupId>org.roger600.uberfire.testapp</groupId>
       <artifactId>uberfire-test-app-model-api</artifactId>
-    </dependency>
+    </dependency>-->
 
     <!-- UberFire Plugins Extension -->
     <dependency>
@@ -364,7 +370,7 @@
 
             <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-client</compileSourcesArtifact>
-            <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-model-api</compileSourcesArtifact>
+            <!--<compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-model-api</compileSourcesArtifact>-->
 
           </compileSourcesArtifacts>
         </configuration>

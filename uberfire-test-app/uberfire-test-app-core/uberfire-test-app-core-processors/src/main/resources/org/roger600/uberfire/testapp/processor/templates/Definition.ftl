@@ -17,17 +17,17 @@
 package ${packageName};
 
 import javax.annotation.Generated;
-import org.jboss.errai.common.client.api.annotations.Portable;
-import org.roger600.uberfire.testapp.api.model.property.Property;
+import javax.enterprise.context.Dependent;
+import org.roger600.uberfire.testapp.api.model.Definition;
 
 /*
  * WARNING! This class is generated. Do not modify.
  */
-@Generated("org.roger600.uberfire.testapp.backend.processor.PropertyProcessor")
-@Portable
-public class ${className} implements Property {
+@Generated("org.roger600.uberfire.testapp.backend.processor.definition.DefinitionProcessor")
+@Dependent
+public class ${className} implements Definition {
 
-    private ${realClassName} realProperty;
+    private final ${realClassName} realDefinition = new ${realClassName}();
 
     public ${className}() {}
 
@@ -39,14 +39,8 @@ public class ${className} implements Property {
     <#if getNameMethodName??>
     @Override
     public String getName() {
-        return realProperty.${getNameMethodName}();
+        return realDefinition.${getNameMethodName}();
     }
     </#if>
-
     
-    @Override
-    public boolean isMandatory() {
-        return false;
-    }
-
 }

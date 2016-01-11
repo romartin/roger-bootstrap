@@ -1,11 +1,12 @@
-package org.roger600.uberfire.testapp.backend.processor;
+package org.roger600.uberfire.testapp.processor;
 
-import org.uberfire.annotations.processors.GeneratorUtils;
 import org.uberfire.annotations.processors.exceptions.GenerationException;
-import org.uberfire.annotations.processors.facades.ClientAPIModule;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.*;
+import javax.lang.model.element.ExecutableElement;
+import javax.lang.model.element.Modifier;
+import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
@@ -16,17 +17,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PropertyGeneratorUtils extends GeneratorUtils {
+public class GeneratorUtils extends org.uberfire.annotations.processors.GeneratorUtils {
 
     private static final String[] NO_PARAMS = new String[0];
     private static final String[] ANY_PARAMS = new String[0];
 
     
-    public static String getNameMethodName(final TypeElement classElement,
-                                                             final ProcessingEnvironment processingEnvironment ) throws GenerationException {
+    public static String getStringMethodName(final TypeElement classElement,
+                                             final String annName,
+                                             final ProcessingEnvironment processingEnvironment ) throws GenerationException {
         return getStringMethodName( classElement,
                 processingEnvironment,
-                PropertyProcessor.ANNOTATION_PROPERTY_NAME );
+                annName );
     }
 
     private static String getStringMethodName( final TypeElement classElement,
