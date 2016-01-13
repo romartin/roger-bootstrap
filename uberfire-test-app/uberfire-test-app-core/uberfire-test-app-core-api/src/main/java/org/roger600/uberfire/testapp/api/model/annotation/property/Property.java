@@ -9,5 +9,7 @@ import java.lang.annotation.Target;
 public @interface Property {
 
     String identifier();
+
+    String name();
     
 }

@@ -1,7 +1,9 @@
-package org.roger600.uberfire.testapp.client.viewer;
+package org.roger600.uberfire.testapp.client.widgets.viewer;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import org.roger600.uberfire.testapp.model.api.impl.MyProperty;
 import org.uberfire.client.mvp.UberView;
 
 import javax.annotation.PostConstruct;
@@ -15,16 +17,19 @@ public class Viewer implements IsWidget {
         
     }
 
+    MyProperty myProperty;
     View view;
 
     @Inject
-    public Viewer(View view) {
+    public Viewer(View view, MyProperty myProperty) {
         this.view = view;
+        this.myProperty = myProperty;
     }
 
     @PostConstruct
     public void init() {
         view.init(this);
+        GWT.log("property1Property: " + myProperty.getId() );
     }
 
     @Override

@@ -1,14 +1,9 @@
-package org.roger600.uberfire.testapp.client.viewer;
+package org.roger600.uberfire.testapp.client.widgets.viewer;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.*;
-import org.uberfire.client.mvp.UberView;
-
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.Dependent;
-import javax.inject.Inject;
 
 /**
  * @see <a>http://www.gwtproject.org/javadoc/latest/com/google/gwt/user/client/ui/Tree.html</a>

@@ -16,9 +16,8 @@
 
 package org.roger600.uberfire.testapp.client.screens;
 
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
-import org.roger600.uberfire.testapp.client.viewer.Viewer;
+import org.roger600.uberfire.testapp.client.widgets.viewer.Viewer;
 import org.uberfire.client.annotations.*;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.common.ErrorPopupPresenter;

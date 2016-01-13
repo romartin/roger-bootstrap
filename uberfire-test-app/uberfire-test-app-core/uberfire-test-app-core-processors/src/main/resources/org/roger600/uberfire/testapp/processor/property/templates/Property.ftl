@@ -18,16 +18,18 @@ package ${packageName};
 
 import javax.annotation.Generated;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import org.roger600.uberfire.testapp.api.model.property.Property;
 
 /*
  * WARNING! This class is generated. Do not modify.
  */
-@Generated("org.roger600.uberfire.testapp.backend.processor.PropertyProcessor")
+@Generated("org.roger600.uberfire.testapp.processor.property.PropertyProcessor")
 @Dependent
-public class ${className} implements Property {
+@Named("${identifier}")
+public class ${className} implements ${realClassName} {
 
-    private final ${realClassName} realProperty = new ${realClassName}();
+    // private final ${realClassName} realProperty = new ${realClassName}();
 
     public ${className}() {}
 
@@ -35,14 +37,11 @@ public class ${className} implements Property {
     public String getId() {
         return "${identifier}";
     }
-    
-    <#if getNameMethodName??>
+
     @Override
     public String getName() {
-        return realProperty.${getNameMethodName}();
+        return "${name}";
     }
-    </#if>
-
     
     @Override
     public boolean isMandatory() {
