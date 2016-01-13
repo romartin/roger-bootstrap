@@ -9,5 +9,7 @@ import java.lang.annotation.Target;
 public @interface Definition {
 
     String identifier();
+
+    String name();
     
 }

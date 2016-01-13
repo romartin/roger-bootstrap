@@ -55,7 +55,7 @@ public class DefinitionProcessor extends AbstractErrorAbsorbingProcessor {
         final Elements elementUtils = processingEnv.getElementUtils();
 
         for ( Element e : roundEnv.getElementsAnnotatedWith( elementUtils.getTypeElement(ANNOTATION_DEFINITION) ) ) {
-            if (e.getKind() == ElementKind.CLASS) {
+            if (e.getKind() == ElementKind.INTERFACE) {
 
                 TypeElement classElement = (TypeElement) e;
                 PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();

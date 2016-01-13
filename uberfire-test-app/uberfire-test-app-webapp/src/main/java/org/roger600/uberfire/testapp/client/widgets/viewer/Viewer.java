@@ -3,12 +3,16 @@ package org.roger600.uberfire.testapp.client.widgets.viewer;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import org.roger600.uberfire.testapp.api.model.property.Property;
+import org.roger600.uberfire.testapp.model.api.impl.MyDefinition;
+import org.roger600.uberfire.testapp.model.api.impl.MyOtherProperty;
 import org.roger600.uberfire.testapp.model.api.impl.MyProperty;
 import org.uberfire.client.mvp.UberView;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @Dependent
 public class Viewer implements IsWidget {
@@ -17,19 +21,39 @@ public class Viewer implements IsWidget {
         
     }
 
+    
+    @Inject
     MyProperty myProperty;
-    View view;
 
     @Inject
-    public Viewer(View view, MyProperty myProperty) {
-        this.view = view;
-        this.myProperty = myProperty;
+    MyOtherProperty myOtherProperty;
+
+    @Inject
+    MyDefinition myDefinition;
+    
+    /*
+    
+    @Inject
+    @Named("myProperty")
+    Property myProperty;
+
+    @Inject
+    @Named("myOtherProperty")
+    Property myOtherProperty;
+     */
+
+    @Inject
+    View view;
+
+    public Viewer() {
     }
 
     @PostConstruct
     public void init() {
         view.init(this);
-        GWT.log("property1Property: " + myProperty.getId() );
+        GWT.log("myProperty: " + myProperty.getId() );
+        GWT.log("myOtherProperty: " + myOtherProperty.getId() );
+        GWT.log("myDefinition: " + myDefinition.getId() );
     }
 
     @Override

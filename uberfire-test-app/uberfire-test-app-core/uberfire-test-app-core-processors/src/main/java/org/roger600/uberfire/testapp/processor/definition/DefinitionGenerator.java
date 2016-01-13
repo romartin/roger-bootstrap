@@ -32,6 +32,7 @@ public class DefinitionGenerator extends AbstractGenerator  {
         final String annotationName = DefinitionProcessor.ANNOTATION_DEFINITION;
 
         String identifier = null;
+        String name = null;
 
         for ( final AnnotationMirror am : classElement.getAnnotationMirrors() ) {
             if ( annotationName.equals( am.getAnnotationType().toString() ) ) {
@@ -39,18 +40,20 @@ public class DefinitionGenerator extends AbstractGenerator  {
                     AnnotationValue aval = entry.getValue();
                     if ( "identifier".equals( entry.getKey().getSimpleName().toString() ) ) {
                         identifier = aval.getValue().toString();
+                    } else if ( "name".equals( entry.getKey().getSimpleName().toString() ) ) {
+                        name = aval.getValue().toString();
                     }
                 }
                 break;
             }
         }
 
-        final String getNameMethodName = GeneratorUtils.getStringMethodName( classElement, DefinitionProcessor.ANNOTATION_DEFINITION_NAME, processingEnvironment );
+        /* final String getNameMethodName = GeneratorUtils.getStringMethodName( classElement, DefinitionProcessor.ANNOTATION_DEFINITION_NAME, processingEnvironment );
 
         // Validations.
         if ( getNameMethodName == null ) {
             throw new GenerationException( "The Definition must provide a @DefinitionName annotated method to return a java.lang.String.", packageName + "." + className );
-        }
+        } */
         
         Map<String, Object> root = new HashMap<String, Object>();
         root.put( "packageName",
@@ -61,8 +64,11 @@ public class DefinitionGenerator extends AbstractGenerator  {
                 classElement.getSimpleName().toString() );
         root.put( "identifier",
                 identifier );
-        root.put( "getNameMethodName",
-                getNameMethodName );
+        root.put( "name",
+                name );
+        
+        /* root.put( "getNameMethodName",
+                getNameMethodName ); */
         
         //Generate code
         final StringWriter sw = new StringWriter();

@@ -18,16 +18,18 @@ package ${packageName};
 
 import javax.annotation.Generated;
 import javax.enterprise.context.Dependent;
+import javax.inject.Named;
 import org.roger600.uberfire.testapp.api.model.Definition;
 
 /*
  * WARNING! This class is generated. Do not modify.
  */
-@Generated("org.roger600.uberfire.testapp.backend.processor.definition.DefinitionProcessor")
+@Generated("org.roger600.uberfire.testapp.processor.definition.DefinitionProcessor")
 @Dependent
-public class ${className} implements Definition {
+@Named("${identifier}")
+public class ${className} implements ${realClassName} {
 
-    private final ${realClassName} realDefinition = new ${realClassName}();
+    // private final ${realClassName} realDefinition = new ${realClassName}();
 
     public ${className}() {}
 
@@ -35,12 +37,10 @@ public class ${className} implements Definition {
     public String getId() {
         return "${identifier}";
     }
-    
-    <#if getNameMethodName??>
+
     @Override
     public String getName() {
-        return realDefinition.${getNameMethodName}();
+        return "${name}";
     }
-    </#if>
     
 }
