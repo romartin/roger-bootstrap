@@ -64,7 +64,6 @@
     <dependency>
       <groupId>org.roger600.uberfire.testapp</groupId>
       <artifactId>uberfire-test-app-core-processors</artifactId>
-      <scope>provided</scope>
     </dependency>
 
   </dependencies>

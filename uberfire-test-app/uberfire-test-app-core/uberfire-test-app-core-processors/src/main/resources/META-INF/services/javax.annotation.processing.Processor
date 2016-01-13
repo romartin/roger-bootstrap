@@ -15,4 +15,4 @@
 #
 
 org.roger600.uberfire.testapp.processor.property.PropertyProcessor
-org.roger600.uberfire.testapp.processor.definition.DiagramProcessor
+org.roger600.uberfire.testapp.processor.definition.DefinitionProcessor

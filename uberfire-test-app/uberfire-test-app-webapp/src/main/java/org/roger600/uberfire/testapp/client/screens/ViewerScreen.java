@@ -18,6 +18,7 @@ package org.roger600.uberfire.testapp.client.screens;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
+import org.roger600.uberfire.testapp.client.viewer.Viewer;
 import org.uberfire.client.annotations.*;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.client.workbench.widgets.common.ErrorPopupPresenter;
@@ -37,8 +38,8 @@ public class ViewerScreen {
 
     public static final String SCREEN_ID = "ViewerScreen";
 
-   /* @Inject
-    Viewer viewer;*/
+    @Inject
+    Viewer viewer;
     
     @Inject
     ErrorPopupPresenter errorPopupPresenter;
@@ -85,8 +86,7 @@ public class ViewerScreen {
 
     @WorkbenchPartView
     public IsWidget getWidget() {
-        return new FlowPanel();
-        // return viewer.asWidget();
+        return viewer.asWidget();
     }
     
     @WorkbenchContextId
