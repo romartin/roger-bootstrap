@@ -209,32 +209,32 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.roger600.uberfire.testapp</groupId>
-      <artifactId>uberfire-test-app-core-api</artifactId>
-    </dependency>
+    <!--  <dependency>
+       <groupId>org.roger600.uberfire.testapp</groupId>
+       <artifactId>uberfire-test-app-core-api</artifactId>
+     </dependency>
+
+     <dependency>
+       <groupId>org.roger600.uberfire.testapp</groupId>
+       <artifactId>uberfire-test-app-core-processors</artifactId>
+       <scope>provided</scope>
+     </dependency>
+
+     <dependency>
+       <groupId>org.roger600.uberfire.testapp</groupId>
+       <artifactId>uberfire-test-app-core-backend</artifactId>
+     </dependency>
+
+     <dependency>
+       <groupId>org.roger600.uberfire.testapp</groupId>
+       <artifactId>uberfire-test-app-core-client</artifactId>
+       <scope>provided</scope>
+     </dependency>
 
     <dependency>
-      <groupId>org.roger600.uberfire.testapp</groupId>
-      <artifactId>uberfire-test-app-core-processors</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.roger600.uberfire.testapp</groupId>
-      <artifactId>uberfire-test-app-core-backend</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.roger600.uberfire.testapp</groupId>
-      <artifactId>uberfire-test-app-core-client</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
-   <!-- <dependency>
-      <groupId>org.roger600.uberfire.testapp</groupId>
-      <artifactId>uberfire-test-app-model-api</artifactId>
-    </dependency>-->
+       <groupId>org.roger600.uberfire.testapp</groupId>
+       <artifactId>uberfire-test-app-model-api</artifactId>
+     </dependency>-->
 
     <!-- UberFire Plugins Extension -->
     <dependency>
@@ -368,9 +368,9 @@
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-properties-editor-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-widgets-service-api</compileSourcesArtifact>
 
-            <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-api</compileSourcesArtifact>
+            <!--<compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-core-client</compileSourcesArtifact>
-            <!--<compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-model-api</compileSourcesArtifact>-->
+            <compileSourcesArtifact>org.roger600.uberfire.testapp:uberfire-test-app-model-api</compileSourcesArtifact>-->
 
           </compileSourcesArtifacts>
         </configuration>
