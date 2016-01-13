@@ -1,6 +1,7 @@
 package org.roger600.uberfire.testapp.processor;
 
 import org.uberfire.annotations.processors.exceptions.GenerationException;
+import org.uberfire.annotations.processors.facades.ClientAPIModule;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.ExecutableElement;
@@ -48,6 +49,34 @@ public class GeneratorUtils extends org.uberfire.annotations.processors.Generato
         }
         return match.getSimpleName().toString();
     }
+    
+    /*
+    classElem=MyDiagram
+    annotClassNamee=IsProperty
+    returnClassName=MyPropery
+     */
+    public static ExecutableElement getExecutableElementMethodName( final TypeElement classElement, 
+                                                                    final String returnClassName,
+                                                                    final String annotClassName,
+                                                         final ProcessingEnvironment processingEnvironment ) throws GenerationException {
+        return getExecutableElementMethodName( classElement,
+                processingEnvironment,
+                returnClassName,
+                annotClassName );
+    }
+
+    private static ExecutableElement getExecutableElementMethodName( final TypeElement originalClassElement,
+                                                          final ProcessingEnvironment processingEnvironment,
+                                                                     final String returnClassName,
+                                                          final String annotationName ) throws GenerationException {
+        final Elements elementUtils = processingEnvironment.getElementUtils();
+        return getUniqueAnnotatedMethod( originalClassElement,
+                processingEnvironment,
+                annotationName,
+                // elementUtils.getTypeElement( "com.google.gwt.user.client.ui.IsWidget" ).asType(),
+                elementUtils.getTypeElement( returnClassName ).asType(),
+                NO_PARAMS );
+    }
 
     private static ExecutableElement getUniqueAnnotatedMethod( final TypeElement originalClassElement,
                                                                final ProcessingEnvironment processingEnvironment,
@@ -72,7 +101,7 @@ public class GeneratorUtils extends org.uberfire.annotations.processors.Generato
         return null;
     }
 
-    private static List<ExecutableElement> getAnnotatedMethods( final TypeElement originalClassElement,
+    public static List<ExecutableElement> getAnnotatedMethods( final TypeElement originalClassElement,
                                                                 final ProcessingEnvironment processingEnvironment,
                                                                 final String annotationName,
                                                                 final TypeMirror requiredReturnType,

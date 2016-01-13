@@ -25,6 +25,7 @@ public class DefinitionProcessor extends AbstractErrorAbsorbingProcessor {
     
     public static final String ANNOTATION_DEFINITION = "org.roger600.uberfire.testapp.api.model.annotation.definition.Definition";
     public static final String ANNOTATION_DEFINITION_NAME = "org.roger600.uberfire.testapp.api.model.annotation.definition.DefinitionName";
+    public static final String ANNOTATION_IS_PROPERTY = "org.roger600.uberfire.testapp.api.model.annotation.definition.IsProperty";
 
     private final DefinitionGenerator definitionGenerator;
 

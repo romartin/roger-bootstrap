@@ -40,7 +40,7 @@ public class ${className} implements ${realClassName} {
 
     @Override
     public String getName() {
-        return "${name}";
+        return "${defName}";
     }
     
 }

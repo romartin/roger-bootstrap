@@ -1,5 +1,6 @@
 package org.roger600.uberfire.testapp.processor.definition;
 
+import org.roger600.uberfire.testapp.api.model.annotation.definition.IsProperty;
 import org.roger600.uberfire.testapp.processor.GeneratorUtils;
 import org.uberfire.annotations.processors.AbstractGenerator;
 import org.uberfire.annotations.processors.exceptions.GenerationException;
@@ -9,12 +10,14 @@ import org.uberfire.relocated.freemarker.template.TemplateException;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.*;
+import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DefinitionGenerator extends AbstractGenerator  {
@@ -23,7 +26,7 @@ public class DefinitionGenerator extends AbstractGenerator  {
     public StringBuffer generate(String packageName, PackageElement packageElement, String className, Element element, ProcessingEnvironment processingEnvironment) throws GenerationException {
 
         final Messager messager = processingEnvironment.getMessager();
-        messager.printMessage( Diagnostic.Kind.NOTE, "Starting code generation for [" + className + "]" );
+        print( messager, "Starting code generation for [" + className + "]" );
 
         final Elements elementUtils = processingEnvironment.getElementUtils();
 
@@ -31,29 +34,24 @@ public class DefinitionGenerator extends AbstractGenerator  {
         final TypeElement classElement = (TypeElement) element;
         final String annotationName = DefinitionProcessor.ANNOTATION_DEFINITION;
 
-        String identifier = null;
-        String name = null;
-
-        for ( final AnnotationMirror am : classElement.getAnnotationMirrors() ) {
-            if ( annotationName.equals( am.getAnnotationType().toString() ) ) {
-                for ( Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : am.getElementValues().entrySet() ) {
-                    AnnotationValue aval = entry.getValue();
-                    if ( "identifier".equals( entry.getKey().getSimpleName().toString() ) ) {
-                        identifier = aval.getValue().toString();
-                    } else if ( "name".equals( entry.getKey().getSimpleName().toString() ) ) {
-                        name = aval.getValue().toString();
-                    }
-                }
-                break;
+        String identifier = getAnnotationStringField(classElement, annotationName, "identifier");
+        print( messager, "************** IDENTIFIER is " + identifier);
+        String name = getAnnotationStringField(classElement, annotationName, "name");
+        print( messager, "************** NAME is " + name);
+        final TypeMirror propertyTypeMirror = elementUtils.getTypeElement( "org.roger600.uberfire.testapp.api.model.property.Property" ).asType();
+        final List<ExecutableElement> propertyElements = GeneratorUtils.getAnnotatedMethods(classElement, processingEnvironment,
+                DefinitionProcessor.ANNOTATION_IS_PROPERTY, propertyTypeMirror, new String[] {});
+        
+        if ( null != propertyElements && !propertyElements.isEmpty() ) {
+            
+            for (ExecutableElement executableElement : propertyElements) {
+                String exeElementPropId = getAnnotationStringField((TypeElement) executableElement.getEnclosingElement(), DefinitionProcessor.ANNOTATION_IS_PROPERTY, "identifier");
+                print( messager, "[" + className + "] - Found property [" + exeElementPropId + "].");
             }
+            
+        } else {
+            print( messager, "[INFO] NO properties for definition " + className);
         }
-
-        /* final String getNameMethodName = GeneratorUtils.getStringMethodName( classElement, DefinitionProcessor.ANNOTATION_DEFINITION_NAME, processingEnvironment );
-
-        // Validations.
-        if ( getNameMethodName == null ) {
-            throw new GenerationException( "The Definition must provide a @DefinitionName annotated method to return a java.lang.String.", packageName + "." + className );
-        } */
         
         Map<String, Object> root = new HashMap<String, Object>();
         root.put( "packageName",
@@ -64,7 +62,7 @@ public class DefinitionGenerator extends AbstractGenerator  {
                 classElement.getSimpleName().toString() );
         root.put( "identifier",
                 identifier );
-        root.put( "name",
+        root.put( "defName",
                 name );
         
         /* root.put( "getNameMethodName",
@@ -89,10 +87,29 @@ public class DefinitionGenerator extends AbstractGenerator  {
                 throw new GenerationException( ioe );
             }
         }
-        messager.printMessage( Diagnostic.Kind.NOTE, "Successfully generated code for [" + className + "]" );
+        print( messager, "Successfully generated code for [" + className + "]" );
 
         return sw.getBuffer();
 
     }
 
+    private String getAnnotationStringField(TypeElement classElement, String annotationName, String fieldName) {
+        for (final AnnotationMirror am : classElement.getAnnotationMirrors()) {
+            if (annotationName.equals(am.getAnnotationType().toString())) {
+                for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : am.getElementValues().entrySet()) {
+                    AnnotationValue aval = entry.getValue();
+                    if (fieldName.equals(entry.getKey().getSimpleName().toString())) {
+                        return aval.getValue().toString();
+                    }
+                    break;
+                }
+            }
+        }
+        return null;
+    }        
+        
+    private void print(final Messager messager , String message ) {
+        messager.printMessage( Diagnostic.Kind.ERROR, message );
+
+    }
 }

@@ -3,6 +3,7 @@ package org.roger600.uberfire.testapp.client.widgets.viewer;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import org.roger600.uberfire.testapp.api.model.Definition;
 import org.roger600.uberfire.testapp.api.model.property.Property;
 import org.roger600.uberfire.testapp.model.api.impl.MyDefinition;
 import org.roger600.uberfire.testapp.model.api.impl.MyOtherProperty;
@@ -22,16 +23,15 @@ public class Viewer implements IsWidget {
     }
 
     
-    @Inject
+    /*@Inject
     MyProperty myProperty;
 
     @Inject
     MyOtherProperty myOtherProperty;
 
     @Inject
-    MyDefinition myDefinition;
+    MyDefinition myDefinition;*/
     
-    /*
     
     @Inject
     @Named("myProperty")
@@ -40,8 +40,11 @@ public class Viewer implements IsWidget {
     @Inject
     @Named("myOtherProperty")
     Property myOtherProperty;
-     */
 
+    @Inject
+    @Named("myDefinition")
+    Definition myDefinition;
+    
     @Inject
     View view;
 
