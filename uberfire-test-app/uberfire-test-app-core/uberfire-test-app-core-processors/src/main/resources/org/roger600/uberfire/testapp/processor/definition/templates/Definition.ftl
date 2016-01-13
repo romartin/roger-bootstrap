@@ -19,6 +19,7 @@ package ${packageName};
 import javax.annotation.Generated;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
+import javax.inject.Inject;
 import org.roger600.uberfire.testapp.api.model.Definition;
 
 /*
@@ -31,6 +32,11 @@ public class ${className} implements ${realClassName} {
 
     // private final ${realClassName} realDefinition = new ${realClassName}();
 
+    <#list properties as property>
+        @Inject
+        ${property.propertyClassName} ${property.methodName};
+    </#list>
+
     public ${className}() {}
 
     @Override
@@ -42,5 +48,12 @@ public class ${className} implements ${realClassName} {
     public String getName() {
         return "${defName}";
     }
-    
+
+    <#list properties as property>
+        @Override
+        public ${property.propertyClassName} ${property.methodName}() {
+          return ${property.methodName};
+        }
+    </#list>
+
 }

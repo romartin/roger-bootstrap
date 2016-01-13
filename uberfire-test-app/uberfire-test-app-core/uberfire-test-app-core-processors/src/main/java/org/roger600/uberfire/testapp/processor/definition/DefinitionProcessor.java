@@ -20,7 +20,7 @@ import java.util.Set;
  * @see org.uberfire.annotations.processors.WorkbenchScreenProcessor
  */
 @SupportedAnnotationTypes(DefinitionProcessor.ANNOTATION_DEFINITION)
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class DefinitionProcessor extends AbstractErrorAbsorbingProcessor {
     
     public static final String ANNOTATION_DEFINITION = "org.roger600.uberfire.testapp.api.model.annotation.definition.Definition";

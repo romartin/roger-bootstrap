@@ -20,7 +20,7 @@ import java.util.Set;
  * @see org.uberfire.annotations.processors.WorkbenchScreenProcessor
  */
 @SupportedAnnotationTypes(PropertyProcessor.ANNOTATION_PROPERTY)
-@SupportedSourceVersion(SourceVersion.RELEASE_6)
+@SupportedSourceVersion(SourceVersion.RELEASE_7)
 public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
     
     public static final String ANNOTATION_PROPERTY = "org.roger600.uberfire.testapp.api.model.annotation.property.Property";

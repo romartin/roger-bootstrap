@@ -10,6 +10,8 @@ import org.uberfire.relocated.freemarker.template.TemplateException;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.*;
+import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
@@ -17,10 +19,32 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * see http://www.pingtimeout.fr/2012/10/debugging-annotation-processor-in-every.html
+ */
 public class DefinitionGenerator extends AbstractGenerator  {
+    
+    public class PropertyElement {
+        private final String propertyClassName;
+        private final String methodName;
+
+        public PropertyElement(String propertyClassName, String methodName) {
+            this.propertyClassName = propertyClassName;
+            this.methodName = methodName;
+        }
+
+        public String getPropertyClassName() {
+            return propertyClassName;
+        }
+
+        public String getMethodName() {
+            return methodName;
+        }
+    }
     
     @Override
     public StringBuffer generate(String packageName, PackageElement packageElement, String className, Element element, ProcessingEnvironment processingEnvironment) throws GenerationException {
@@ -42,11 +66,23 @@ public class DefinitionGenerator extends AbstractGenerator  {
         final List<ExecutableElement> propertyElements = GeneratorUtils.getAnnotatedMethods(classElement, processingEnvironment,
                 DefinitionProcessor.ANNOTATION_IS_PROPERTY, propertyTypeMirror, new String[] {});
         
+        final List<PropertyElement> properties = new LinkedList<>();
         if ( null != propertyElements && !propertyElements.isEmpty() ) {
             
             for (ExecutableElement executableElement : propertyElements) {
-                String exeElementPropId = getAnnotationStringField((TypeElement) executableElement.getEnclosingElement(), DefinitionProcessor.ANNOTATION_IS_PROPERTY, "identifier");
-                print( messager, "[" + className + "] - Found property [" + exeElementPropId + "].");
+
+                final String methodName = executableElement.getSimpleName().toString();
+                String returnClassName = null;
+                final TypeMirror returnTypeMirror = executableElement.getReturnType();
+                TypeKind returnKind = returnTypeMirror.getKind();
+                if (returnKind == TypeKind.DECLARED) {
+                    DeclaredType declaredReturnType = (DeclaredType) returnTypeMirror;
+                    returnClassName = declaredReturnType.toString();
+                }
+
+                properties.add(new PropertyElement(returnClassName, methodName));
+                
+                print( messager, "[" + className + "] - Found property [class=" + returnClassName + "] at method [" + methodName + "].");
             }
             
         } else {
@@ -64,6 +100,8 @@ public class DefinitionGenerator extends AbstractGenerator  {
                 identifier );
         root.put( "defName",
                 name );
+        root.put( "properties",
+                properties );
         
         /* root.put( "getNameMethodName",
                 getNameMethodName ); */
@@ -101,7 +139,6 @@ public class DefinitionGenerator extends AbstractGenerator  {
                     if (fieldName.equals(entry.getKey().getSimpleName().toString())) {
                         return aval.getValue().toString();
                     }
-                    break;
                 }
             }
         }
