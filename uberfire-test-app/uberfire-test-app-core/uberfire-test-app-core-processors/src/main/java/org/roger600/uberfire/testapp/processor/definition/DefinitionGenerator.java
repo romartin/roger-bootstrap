@@ -2,6 +2,7 @@ package org.roger600.uberfire.testapp.processor.definition;
 
 import org.roger600.uberfire.testapp.api.model.annotation.definition.IsProperty;
 import org.roger600.uberfire.testapp.processor.GeneratorUtils;
+import org.roger600.uberfire.testapp.processor.ProcessingElement;
 import org.uberfire.annotations.processors.AbstractGenerator;
 import org.uberfire.annotations.processors.exceptions.GenerationException;
 import org.uberfire.relocated.freemarker.template.Template;
@@ -24,33 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * see http://www.pingtimeout.fr/2012/10/debugging-annotation-processor-in-every.html
- */
 public class DefinitionGenerator extends AbstractGenerator  {
-    
-    
-    @PostConstruct
-    public void init() {
-        
-    }
-    public class PropertyElement {
-        private final String propertyClassName;
-        private final String methodName;
-
-        public PropertyElement(String propertyClassName, String methodName) {
-            this.propertyClassName = propertyClassName;
-            this.methodName = methodName;
-        }
-
-        public String getPropertyClassName() {
-            return propertyClassName;
-        }
-
-        public String getMethodName() {
-            return methodName;
-        }
-    }
     
     @Override
     public StringBuffer generate(String packageName, PackageElement packageElement, String className, Element element, ProcessingEnvironment processingEnvironment) throws GenerationException {
@@ -72,25 +47,15 @@ public class DefinitionGenerator extends AbstractGenerator  {
         final List<ExecutableElement> propertyElements = GeneratorUtils.getAnnotatedMethods(classElement, processingEnvironment,
                 DefinitionProcessor.ANNOTATION_IS_PROPERTY, propertyTypeMirror, new String[] {});
         
-        final List<PropertyElement> properties = new LinkedList<>();
+        final List<ProcessingElement> properties = new LinkedList<>();
         if ( null != propertyElements && !propertyElements.isEmpty() ) {
-            
             for (ExecutableElement executableElement : propertyElements) {
-
                 final String methodName = executableElement.getSimpleName().toString();
-                String returnClassName = null;
                 final TypeMirror returnTypeMirror = executableElement.getReturnType();
-                TypeKind returnKind = returnTypeMirror.getKind();
-                if (returnKind == TypeKind.DECLARED) {
-                    DeclaredType declaredReturnType = (DeclaredType) returnTypeMirror;
-                    returnClassName = declaredReturnType.toString();
-                }
-
-                properties.add(new PropertyElement(returnClassName, methodName));
-                
+                String returnClassName = GeneratorUtils.getTypeMirrorDeclaredName(returnTypeMirror);
+                properties.add(new ProcessingElement(returnClassName, methodName));
                 print( messager, "[" + className + "] - Found property [class=" + returnClassName + "] at method [" + methodName + "].");
             }
-            
         } else {
             print( messager, "[INFO] NO properties for definition " + className);
         }
@@ -152,7 +117,7 @@ public class DefinitionGenerator extends AbstractGenerator  {
     }        
         
     private void print(final Messager messager , String message ) {
-        messager.printMessage( Diagnostic.Kind.ERROR, message );
+        messager.printMessage( Diagnostic.Kind.WARNING, message );
 
     }
 }

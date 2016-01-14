@@ -4,11 +4,9 @@ import org.uberfire.annotations.processors.exceptions.GenerationException;
 import org.uberfire.annotations.processors.facades.ClientAPIModule;
 
 import javax.annotation.processing.ProcessingEnvironment;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
 import javax.lang.model.util.Elements;
@@ -16,6 +14,7 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class GeneratorUtils extends org.uberfire.annotations.processors.GeneratorUtils {
@@ -177,6 +176,21 @@ public class GeneratorUtils extends org.uberfire.annotations.processors.Generato
         return Collections.emptyList();
     }
 
+    public static AnnotationMirror getAnnotation(Elements elementUtils, Element annotationTarget, String annotationName) {
+        Iterator i$ = elementUtils.getAllAnnotationMirrors(annotationTarget).iterator();
+
+        AnnotationMirror annotation;
+        do {
+            if(!i$.hasNext()) {
+                return null;
+            }
+
+            annotation = (AnnotationMirror)i$.next();
+        } while(!annotationName.contentEquals(getQualifiedName(annotation)));
+
+        return annotation;
+    }
+
     private static boolean doParametersMatch(Types typeUtils, Elements elementUtils, ExecutableElement e, String[] requiredParameterTypes) {
         if(requiredParameterTypes == ANY_PARAMS) {
             return true;
@@ -202,6 +216,15 @@ public class GeneratorUtils extends org.uberfire.annotations.processors.Generato
 
             return true;
         }
+    }
+    
+    public static String getTypeMirrorDeclaredName(TypeMirror typeMirror) {
+        TypeKind returnKind = typeMirror.getKind();
+        if (returnKind == TypeKind.DECLARED) {
+            DeclaredType declaredReturnType = (DeclaredType) typeMirror;
+            return declaredReturnType.toString();
+        }
+        return null;
     }
 
     private static String fqcnToSimpleName(String fqcn) {

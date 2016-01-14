@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 import org.roger600.uberfire.testapp.api.model.Definition;
+import org.roger600.uberfire.testapp.api.model.RuntimeDefinition;
+import org.roger600.uberfire.testapp.api.model.property.HasDefaultValue;
 import org.roger600.uberfire.testapp.api.model.property.Property;
 import org.roger600.uberfire.testapp.model.api.impl.MyDefinition;
 import org.roger600.uberfire.testapp.model.api.impl.MyOtherProperty;
@@ -54,9 +56,11 @@ public class Viewer implements IsWidget {
     @PostConstruct
     public void init() {
         view.init(this);
-        GWT.log("myProperty: " + myProperty.getId() );
+        GWT.log("myProperty Id: " + myProperty.getId() );
+        GWT.log("myProperty DefaultValue: " + ( (HasDefaultValue<String>) myProperty).getDefaultValue() );
         GWT.log("myOtherProperty: " + myOtherProperty.getId() );
-        GWT.log("myDefinition: " + myDefinition.getId() );
+        GWT.log("myDefinition Id: " + myDefinition.getId() );
+        GWT.log("myDefinition Properties Size: " + ( (RuntimeDefinition) myDefinition).getProperties().size() );
     }
 
     @Override

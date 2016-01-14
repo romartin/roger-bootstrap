@@ -20,6 +20,7 @@ import javax.annotation.Generated;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import org.roger600.uberfire.testapp.api.model.property.Property;
+import org.roger600.uberfire.testapp.api.model.property.HasDefaultValue;
 
 /*
  * WARNING! This class is generated. Do not modify.
@@ -27,7 +28,11 @@ import org.roger600.uberfire.testapp.api.model.property.Property;
 @Generated("org.roger600.uberfire.testapp.processor.property.PropertyProcessor")
 @Dependent
 @Named("${identifier}")
-public class ${className} implements ${realClassName} {
+public class ${className} implements ${realClassName}
+<#if defaultValue??>
+    , HasDefaultValue<${defaultValue.propertyClassName}>
+</#if>
+{
 
     // private final ${realClassName} realProperty = new ${realClassName}();
 
@@ -47,5 +52,12 @@ public class ${className} implements ${realClassName} {
     public boolean isMandatory() {
         return false;
     }
+
+    <#if defaultValue??>
+        @Override
+        public ${defaultValue.propertyClassName} getDefaultValue() {
+            return ${realClassName}.${defaultValue.methodName};
+        }
+    </#if>
 
 }

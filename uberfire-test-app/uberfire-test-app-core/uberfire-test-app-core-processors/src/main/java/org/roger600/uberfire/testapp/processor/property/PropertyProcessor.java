@@ -25,6 +25,7 @@ public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
     
     public static final String ANNOTATION_PROPERTY = "org.roger600.uberfire.testapp.api.model.annotation.property.Property";
     public static final String ANNOTATION_PROPERTY_NAME = "org.roger600.uberfire.testapp.api.model.annotation.property.PropertyName";
+    public static final String ANNOTATION_DEFAULT_VALUE = "org.roger600.uberfire.testapp.api.model.annotation.property.DefaultValue";
 
     private final PropertyGenerator propertyGenerator;
 

@@ -1,6 +1,8 @@
 package org.roger600.uberfire.testapp.processor.property;
 
+import org.roger600.uberfire.testapp.api.model.annotation.property.DefaultValue;
 import org.roger600.uberfire.testapp.processor.GeneratorUtils;
+import org.roger600.uberfire.testapp.processor.ProcessingElement;
 import org.uberfire.annotations.processors.AbstractGenerator;
 import org.uberfire.annotations.processors.exceptions.GenerationException;
 import org.uberfire.relocated.freemarker.template.Template;
@@ -9,16 +11,24 @@ import org.uberfire.relocated.freemarker.template.TemplateException;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.*;
+import javax.lang.model.type.TypeMirror;
+import javax.lang.model.util.ElementFilter;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @see org.uberfire.annotations.processors.ScreenActivityGenerator
+ * 
+ * links:
+ * - https://docs.oracle.com/javase/tutorial/java/annotations/index.html
+ * - http://www.pingtimeout.fr/2012/10/debugging-annotation-processor-in-every.html
+ * - http://stackoverflow.com/questions/1458535/which-types-can-be-used-for-java-annotation-members
  */
 public class PropertyGenerator extends AbstractGenerator  {
     
@@ -50,13 +60,22 @@ public class PropertyGenerator extends AbstractGenerator  {
                 break;
             }
         }
-
-        /* final String getNameMethodName = GeneratorUtils.getStringMethodName( classElement, PropertyProcessor.ANNOTATION_PROPERTY_NAME, processingEnvironment );
-
-        // Validations.
-        if ( getNameMethodName == null ) {
-            throw new GenerationException( "The Property must provide a @PropertyName annotated method to return a java.lang.String.", packageName + "." + className );
-        } */
+        
+        
+        // Field types.
+        ProcessingElement defaultValueElement = null;
+        List<VariableElement> variableElements = ElementFilter.fieldsIn( classElement.getEnclosedElements() );
+        for (VariableElement variableElement : variableElements) {
+            
+            // Default Value.
+            if ( GeneratorUtils.getAnnotation( elementUtils, variableElement, PropertyProcessor.ANNOTATION_DEFAULT_VALUE ) != null ) {
+                final TypeMirror fieldReturnType = variableElement.asType();
+                final String fieldReturnTypeName = GeneratorUtils.getTypeMirrorDeclaredName(fieldReturnType);
+                final String fieldName = variableElement.getSimpleName().toString();
+                defaultValueElement = new ProcessingElement(fieldReturnTypeName, fieldName);
+            }
+            
+        }
         
         Map<String, Object> root = new HashMap<String, Object>();
         root.put( "packageName",
@@ -69,6 +88,9 @@ public class PropertyGenerator extends AbstractGenerator  {
                 identifier );
         root.put( "name",
                 name );
+        root.put( "defaultValue",
+                defaultValueElement );
+        
         /*root.put( "getNameMethodName",
                 getNameMethodName );*/
         

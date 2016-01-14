@@ -19,7 +19,7 @@ import java.lang.annotation.*;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.LOCAL_VARIABLE})
-public @interface PropertyName {
+@Target({ElementType.FIELD})
+public @interface DefaultValue {
 
 }
