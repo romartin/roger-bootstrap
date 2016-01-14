@@ -7,9 +7,7 @@ import org.roger600.uberfire.testapp.api.model.Definition;
 import org.roger600.uberfire.testapp.api.model.RuntimeDefinition;
 import org.roger600.uberfire.testapp.api.model.property.HasDefaultValue;
 import org.roger600.uberfire.testapp.api.model.property.Property;
-import org.roger600.uberfire.testapp.model.api.impl.MyDefinition;
-import org.roger600.uberfire.testapp.model.api.impl.MyOtherProperty;
-import org.roger600.uberfire.testapp.model.api.impl.MyProperty;
+import org.roger600.uberfire.testapp.model.api.impl.*;
 import org.uberfire.client.mvp.UberView;
 
 import javax.annotation.PostConstruct;
@@ -58,9 +56,21 @@ public class Viewer implements IsWidget {
         view.init(this);
         GWT.log("myProperty Id: " + myProperty.getId() );
         GWT.log("myProperty DefaultValue: " + ( (HasDefaultValue<String>) myProperty).getDefaultValue() );
-        GWT.log("myOtherProperty: " + myOtherProperty.getId() );
+        GWT.log("myOtherProperty Id: " + myOtherProperty.getId() );
+        logAValue( ( (HasDefaultValue<AValue>) myOtherProperty).getDefaultValue() );
         GWT.log("myDefinition Id: " + myDefinition.getId() );
         GWT.log("myDefinition Properties Size: " + ( (RuntimeDefinition) myDefinition).getProperties().size() );
+    }
+    
+    private void logAValue(AValue aValue) {
+        GWT.log("AValue Id" + aValue.getId());
+        GWT.log("AValue Value" + aValue.getValue());
+        logAnotherValue(aValue.getAnotherValue());
+    }
+
+    private void logAnotherValue(AnotherValue aValue) {
+        GWT.log("AValue Id" + aValue.getId());
+        GWT.log("AValue Value" + aValue.getValue());
     }
 
     @Override
