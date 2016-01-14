@@ -29,8 +29,31 @@ import java.util.Map;
  * - https://docs.oracle.com/javase/tutorial/java/annotations/index.html
  * - http://www.pingtimeout.fr/2012/10/debugging-annotation-processor-in-every.html
  * - http://stackoverflow.com/questions/1458535/which-types-can-be-used-for-java-annotation-members
+ * 
+ * TODO: After all known field/annotations processes on the element, process the missing fieldss (not processed ones) by adding all them into the generated impl.
  */
 public class PropertyGenerator extends AbstractGenerator  {
+
+    public static class PropertyGeneratorConfig {
+        
+        // Iface or abstract class.
+        private final boolean isInterface;
+
+        public PropertyGeneratorConfig(boolean isInterface) {
+            this.isInterface = isInterface;
+        }
+
+        public boolean isInterface() {
+            return isInterface;
+        }
+    }
+
+    private PropertyGeneratorConfig generatorConfig;
+
+    public PropertyGenerator setConfig(PropertyGeneratorConfig config) {
+        this.generatorConfig = config;
+        return this;
+    }
     
     @Override
     public StringBuffer generate(String packageName, PackageElement packageElement, String className, Element element, ProcessingEnvironment processingEnvironment) throws GenerationException {
@@ -82,6 +105,8 @@ public class PropertyGenerator extends AbstractGenerator  {
                 packageName );
         root.put( "className",
                 className );
+        root.put( "classHierarchyModifier",
+                generatorConfig.isInterface ? "implements" : "extends" );
         root.put( "realClassName",
                 classElement.getSimpleName().toString() );
         root.put( "identifier",

@@ -28,7 +28,7 @@ import org.roger600.uberfire.testapp.api.model.property.HasDefaultValue;
 @Generated("org.roger600.uberfire.testapp.processor.property.PropertyProcessor")
 @Dependent
 @Named("${identifier}")
-public class ${className} implements ${realClassName}
+public class ${className} ${classHierarchyModifier} ${realClassName}
 <#if defaultValue??>
     , HasDefaultValue<${defaultValue.propertyClassName}>
 </#if>

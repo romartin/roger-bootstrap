@@ -56,7 +56,9 @@ public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
         final Elements elementUtils = processingEnv.getElementUtils();
 
         for ( Element e : roundEnv.getElementsAnnotatedWith( elementUtils.getTypeElement(ANNOTATION_PROPERTY) ) ) {
-            if (e.getKind() == ElementKind.INTERFACE) {
+            final boolean isIface = e.getKind() == ElementKind.INTERFACE;
+            final boolean isClass = e.getKind() == ElementKind.CLASS;
+            if (isIface || isClass) {
 
                 TypeElement classElement = (TypeElement) e;
                 PackageElement packageElement = (PackageElement) classElement.getEnclosingElement();
@@ -70,7 +72,7 @@ public class PropertyProcessor extends AbstractErrorAbsorbingProcessor {
                     //Try generating code for each required class
                     messager.printMessage( Diagnostic.Kind.NOTE, "Generating code for [" + classNameActivity + "]" );
 
-                    final StringBuffer propertyClassCode = propertyGenerator.generate( packageName,
+                    final StringBuffer propertyClassCode = propertyGenerator.setConfig(new PropertyGenerator.PropertyGeneratorConfig(isIface)).generate( packageName,
                             packageElement,
                             classNameActivity,
                             classElement,

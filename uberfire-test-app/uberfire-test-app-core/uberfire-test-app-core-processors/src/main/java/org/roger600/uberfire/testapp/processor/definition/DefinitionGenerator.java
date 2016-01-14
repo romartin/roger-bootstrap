@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+// TODO: After all known field/annotations processes on the element, process the missing fieldss (not processed ones) by adding all them into the generated impl.
 public class DefinitionGenerator extends AbstractGenerator  {
     
     @Override

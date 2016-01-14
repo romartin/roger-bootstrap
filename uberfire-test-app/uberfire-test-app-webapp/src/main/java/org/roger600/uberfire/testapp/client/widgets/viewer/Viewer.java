@@ -44,6 +44,10 @@ public class Viewer implements IsWidget {
     @Inject
     @Named("myDefinition")
     Definition myDefinition;
+
+    @Inject
+    @Named("myClassProperty")
+    Property myClassProperty;
     
     @Inject
     View view;
@@ -58,6 +62,7 @@ public class Viewer implements IsWidget {
         GWT.log("myProperty DefaultValue: " + ( (HasDefaultValue<String>) myProperty).getDefaultValue() );
         GWT.log("myOtherProperty Id: " + myOtherProperty.getId() );
         logAValue( ( (HasDefaultValue<AValue>) myOtherProperty).getDefaultValue() );
+        GWT.log("myClassProperty Id: " + myClassProperty.getId() );
         GWT.log("myDefinition Id: " + myDefinition.getId() );
         GWT.log("myDefinition Properties Size: " + ( (RuntimeDefinition) myDefinition).getProperties().size() );
     }
