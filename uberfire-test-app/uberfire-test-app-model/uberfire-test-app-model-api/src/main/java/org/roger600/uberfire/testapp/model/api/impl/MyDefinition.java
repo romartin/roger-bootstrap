@@ -7,6 +7,9 @@ import org.roger600.uberfire.testapp.api.model.annotation.definition.IsProperty;
 public interface MyDefinition extends org.roger600.uberfire.testapp.api.model.Definition {
     
     @IsProperty
-    MyProperty getMyProperty();
+    MyProperty myProperty();
+
+    @IsProperty
+    MyOtherProperty myOtherProperty();
     
 }

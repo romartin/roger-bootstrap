@@ -7,6 +7,7 @@ import org.uberfire.annotations.processors.exceptions.GenerationException;
 import org.uberfire.relocated.freemarker.template.Template;
 import org.uberfire.relocated.freemarker.template.TemplateException;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.*;
@@ -28,6 +29,11 @@ import java.util.Map;
  */
 public class DefinitionGenerator extends AbstractGenerator  {
     
+    
+    @PostConstruct
+    public void init() {
+        
+    }
     public class PropertyElement {
         private final String propertyClassName;
         private final String methodName;

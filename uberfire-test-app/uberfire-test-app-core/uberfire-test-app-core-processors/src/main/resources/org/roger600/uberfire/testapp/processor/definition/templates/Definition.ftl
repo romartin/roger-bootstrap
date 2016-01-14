@@ -20,7 +20,13 @@ import javax.annotation.Generated;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.inject.Inject;
+import javax.annotation.PostConstruct;
 import org.roger600.uberfire.testapp.api.model.Definition;
+import org.roger600.uberfire.testapp.api.model.RuntimeDefinition;
+import org.roger600.uberfire.testapp.api.model.property.Property;
+
+import java.util.List;
+import java.util.ArrayList;
 
 /*
  * WARNING! This class is generated. Do not modify.
@@ -28,10 +34,12 @@ import org.roger600.uberfire.testapp.api.model.Definition;
 @Generated("org.roger600.uberfire.testapp.processor.definition.DefinitionProcessor")
 @Dependent
 @Named("${identifier}")
-public class ${className} implements ${realClassName} {
+public class ${className} implements ${realClassName}, RuntimeDefinition {
 
     // private final ${realClassName} realDefinition = new ${realClassName}();
 
+    List<Property> properties = new ArrayList();
+    
     <#list properties as property>
         @Inject
         ${property.propertyClassName} ${property.methodName};
@@ -39,6 +47,13 @@ public class ${className} implements ${realClassName} {
 
     public ${className}() {}
 
+    @PostConstruct
+    public void init() {
+        <#list properties as property>
+            properties.add(${property.methodName});
+        </#list>
+    }
+    
     @Override
     public String getId() {
         return "${identifier}";
@@ -47,6 +62,11 @@ public class ${className} implements ${realClassName} {
     @Override
     public String getName() {
         return "${defName}";
+    }
+
+    @Override
+    public List<Property> getProperties() {
+        return properties;
     }
 
     <#list properties as property>
